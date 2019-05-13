@@ -15,7 +15,6 @@ def all_tasks():
 
 @app.route('/create', methods=["GET", "POST"])
 def create_task():
-    print(session)
     if 'username' not in session:
         return redirect(url_for('login'))
     if request.method == "GET":
@@ -43,8 +42,6 @@ def incomplete():
         return redirect(url_for('login'))
     if request.method == "POST":
         user = User.select().where(User.name == session['username']).get()
-        print(user)
-        print(user.name)
 
         Task.update(performed=datetime.now(), performed_by=user)\
             .where(Task.id == request.form['task_id'])\
